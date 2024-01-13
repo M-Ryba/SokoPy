@@ -1,16 +1,19 @@
 import pygame
-
-import config
-import movement
+import objects
 import sound
-import assets
+import draw
 import level
 
 pygame.init()
-window = pygame.display.set_mode((config.window_width, config.window_height))
-pygame.display.set_caption("Pierwsza gra w Pygame")
 
-player = pygame.rect.Rect(config.x, config.y, config.width, config.height)  # tworzy kwadrat reprezentujący gracza
+level = level.load_level(1)
+draw.draw_level(level)  # rysuje poziom
+player = objects.create_player(level)  # tworzy gracza (jeden obiekt)
+# crates = objects.create_crates(level)  # tworzy skrzynki (obiekty w liście)
+crates = []  # TYMCZASOWO
+print(player.x)
+print(player.y)
+
 
 clock = pygame.time.Clock()
 walk_cooldown = 0
@@ -34,31 +37,22 @@ while run:
 
     if walk_cooldown <= 0:
         if keys[pygame.K_RIGHT]:  # jeśli naciśnięta jest strzałka w prawo
-            config.x += config.speed
             walk_cooldown = walk_delay  # ustawia z powrotem licznik czasu do następnego ruchu
-            last_move = "right"
+            player.move(1, 0, "right")
             sound.play_sound("player_move")
         if keys[pygame.K_LEFT]:  # strzałka w lewo
-            config.x -= config.speed
             walk_cooldown = walk_delay
-            last_move = "left"
+            player.move(-1, 0, "left")
             sound.play_sound("player_move")
         if keys[pygame.K_UP]:  # strzałka w górę
-            config.y -= config.speed
             walk_cooldown = walk_delay
-            last_move = "up"
+            player.move(0, -1, "up")
             sound.play_sound("player_move")
         if keys[pygame.K_DOWN]:  # strzałka w dół
-            config.y += config.speed
             walk_cooldown = walk_delay
-            last_move = "down"
+            player.move(0, 1, "down")
             sound.play_sound("player_move")
 
-        player = pygame.rect.Rect(config.x, config.y, config.width, config.height)  # odświeżenie pozycji gracza
-
-    window.fill((0, 0, 0))
-
-    window.blit(movement.get_player_sprite(last_move), player)
-    pygame.display.update()
+    draw.update(level, player, crates)
 
 pygame.quit()

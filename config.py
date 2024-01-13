@@ -1,6 +1,3 @@
-# pozycja startowa postaci
-x = 0
-y = 0
 # rozmiar postaci i elementów poziomu
 width = 64
 height = 64

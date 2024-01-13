@@ -1,5 +1,4 @@
 import pygame
-import config
 import assets
 pygame.init()
 

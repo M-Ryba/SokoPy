@@ -23,5 +23,7 @@ def draw_level(level):
 
 def update(level, player, crates):
     draw_level(level)
+    for crate in crates:
+        window.blit(crate.image, (crate.x, crate.y))  # rysuje skrzynkę
     window.blit(player.image, (player.x, player.y))  # rysuje gracza
     pygame.display.update()

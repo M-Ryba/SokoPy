@@ -1,6 +1,4 @@
-import pygame
 import assets
-pygame.init()
 
 
 def get_player_sprite(last_move):

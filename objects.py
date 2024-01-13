@@ -20,6 +20,7 @@ class Crate(object):
     def __init__(self, start_x, start_y):
         self.x = start_x
         self.y = start_y
+        self.image = assets.images["crate"]
         self.on_goal = False
 
     def move(self, x, y):
@@ -34,3 +35,18 @@ def create_player(level):
         for tile in row:
             if tile == 0:
                 return Player(x, y, config.speed)
+            x += config.speed
+        y += config.speed
+
+
+def create_crates(level):
+    crates = []
+    x, y = 0, 0
+    for row in level:
+        x = 0
+        for tile in row:
+            if tile == 2:
+                crates.append(Crate(x, y))
+            x += config.speed
+        y += config.speed
+    return crates

@@ -2,7 +2,6 @@ import pygame
 import config
 import assets
 
-pygame.display.set_caption("Pierwsza gra w Pygame")
 display = pygame.display.set_mode((config.window_width, config.window_height))
 
 

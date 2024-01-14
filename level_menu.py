@@ -9,9 +9,9 @@ pygame.init()
 
 
 def choose(player_name):
-
     running = True
     while running:
+        pygame.display.set_caption("SokoPy - Wybierz poziom")
         for event in pygame.event.get():
             # kończy program po zamknięciu okna gry
             if event.type == pygame.QUIT:
@@ -23,7 +23,9 @@ def choose(player_name):
                 elif event.key == pygame.K_1:
                     main.play(level.load(1))  # uruchom poziom 1 (przekazuje załadowany poziom)
                 elif event.key == pygame.K_2:
-                    main.play(level.load(2))  # uruchom poziom 2 (przekazuje załadowany poziom)
+                    main.play(level.load(2))
+                elif event.key == pygame.K_3:
+                    main.play(level.load(3))
 
         draw.display.fill((0, 0, 0))  # czyści ekran
         draw.draw_text(f"Gracz: {player_name}", assets.fonts["small_text_font"], assets.colors["white"], 50, 120)
@@ -32,4 +34,5 @@ def choose(player_name):
         draw.draw_text("0. Powrót do menu głównego", assets.fonts["text_font"], assets.colors["yellow"], 50, 200)
         draw.draw_text("1. Poziom 1", assets.fonts["text_font"], assets.colors["white"], 50, 250)
         draw.draw_text("2. Poziom 2", assets.fonts["text_font"], assets.colors["white"], 50, 300)
+        draw.draw_text("3. Poziom 3", assets.fonts["text_font"], assets.colors["white"], 50, 350)
         pygame.display.update()

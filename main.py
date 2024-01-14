@@ -3,14 +3,17 @@ import config
 import objects
 import sound
 import draw
+import collision
 
 pygame.init()
 
 
 def play(level):
+    pygame.display.set_caption("SokoPy - Poziom 1 (naciśnij klawisz ESCAPE, aby wyjść z poziomu)")
     walk_cooldown = 0
     # opóźnienie między ruchami
     walk_delay = 1
+    speed = config.speed
 
     draw.draw_level(level)  # rysuje poziom
     player = objects.create_player(level)  # tworzy gracza (jeden obiekt)
@@ -38,22 +41,61 @@ def play(level):
 
         if walk_cooldown <= 0:
             # jeśli strzałka w prawo jest wciśnięta i gracz nie wyjdzie poza ekran
-            if keys[pygame.K_RIGHT] and (player.x + config.speed) < config.window_width:
-                walk_cooldown = walk_delay  # ustawia z powrotem licznik czasu do następnego ruchu
-                player.move(1, 0, "right")
-                sound.play_sound("player_move")
-            elif keys[pygame.K_LEFT] and (player.x - config.speed) >= 0:  # strzałka w lewo
-                walk_cooldown = walk_delay
-                player.move(-1, 0, "left")
-                sound.play_sound("player_move")
-            elif keys[pygame.K_UP] and (player.y - config.speed) >= 0:  # strzałka w górę
-                walk_cooldown = walk_delay
-                player.move(0, -1, "up")
-                sound.play_sound("player_move")
-            elif keys[pygame.K_DOWN] and (player.y + config.speed) < config.window_width:  # strzałka w dół
-                walk_cooldown = walk_delay
-                player.move(0, 1, "down")
-                sound.play_sound("player_move")
+            if keys[pygame.K_RIGHT] and (player.x + speed) < config.window_width:
+                if not collision.wall(level, player.x + speed, player.y):
+                    crate_index = collision.crate(crates, player.x + speed, player.y)
+                    if crate_index is not False:
+                        if crates[crate_index].move(level, crates, speed, 0):
+                            player.move(1, 0, "right")
+                            sound.play_sound("crate_move")
+                    else:
+                        player.move(1, 0, "right")
+                        sound.play_sound("player_move")
+                    walk_cooldown = walk_delay  # ustawia z powrotem licznik czasu do następnego ruchu
+            elif keys[pygame.K_LEFT] and (player.x - speed) >= 0:  # strzałka w lewo
+                if not collision.wall(level, player.x - speed, player.y):
+                    crate_index = collision.crate(crates, player.x - speed, player.y)
+                    if crate_index is not False:
+                        # jeśli skrzynka została rzeczywiście przesunięta (nie napotkała na przeszkodę)
+                        if crates[crate_index].move(level, crates, -speed, 0):
+                            player.move(-1, 0, "left")
+                            sound.play_sound("crate_move")
+                    else:
+                        player.move(-1, 0, "left")
+                        sound.play_sound("player_move")
+                    walk_cooldown = walk_delay
+
+            elif keys[pygame.K_UP] and (player.y - speed) >= 0:  # strzałka w górę
+                if not collision.wall(level, player.x, player.y - speed):
+                    crate_index = collision.crate(crates, player.x, player.y - speed)
+                    if crate_index is not False:
+                        if crates[crate_index].move(level, crates, 0, -speed):
+                            player.move(0, -1, "up")
+                            sound.play_sound("crate_move")
+                    else:
+                        player.move(0, -1, "up")
+                        sound.play_sound("player_move")
+                    walk_cooldown = walk_delay
+            elif keys[pygame.K_DOWN] and (player.y + speed) < config.window_width:  # strzałka w dół
+                if not collision.wall(level, player.x, player.y + speed):
+                    crate_index = collision.crate(crates, player.x, player.y + speed)
+                    if crate_index is not False:
+                        if crates[crate_index].move(level, crates, 0, speed):
+                            player.move(0, 1, "down")
+                            sound.play_sound("crate_move")
+                    else:
+                        player.move(0, 1, "down")
+                        sound.play_sound("player_move")
+                    walk_cooldown = walk_delay
+
+            win = True
+            for c in crates:
+                if not c.on_goal:
+                    win = False
+
+            if win:
+                print("Wygrana!")
+                return
 
         draw.update(level, player, crates)
 

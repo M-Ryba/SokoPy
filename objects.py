@@ -1,6 +1,7 @@
 import assets
 import config
 import movement
+import collision
 
 
 class Player(object):
@@ -23,9 +24,17 @@ class Crate(object):
         self.image = assets.images["crate"]
         self.on_goal = False
 
-    def move(self, x, y):
-        self.x += x
-        self.y += y
+    def move(self, level, crates, x, y):
+        moved = False
+        if not collision.wall(level, self.x + x, self.y + y) and collision.crate(crates, self.x + x, self.y + y) is False:
+            self.x += x
+            self.y += y
+            moved = True
+        if collision.goal(level, self.x, self.y):
+            self.on_goal = True
+        else:
+            self.on_goal = False
+        return moved
 
 
 def create_player(level):

@@ -16,7 +16,7 @@ images = {
 sounds = {
     "menu": pygame.mixer.Sound("assets/sounds/menu.ogg"),
     "crate_on_goal": pygame.mixer.Sound("assets/sounds/create_on_goal.ogg"),
-    "crate_moved": pygame.mixer.Sound("assets/sounds/crate_moved.ogg"),
+    "crate_move": pygame.mixer.Sound("assets/sounds/crate_move.ogg"),
     "level_finished": pygame.mixer.Sound("assets/sounds/level_finished.ogg"),
     "error": pygame.mixer.Sound("assets/sounds/error.ogg"),
     "player_move": pygame.mixer.Sound("assets/sounds/player_move.ogg")

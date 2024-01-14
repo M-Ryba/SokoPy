@@ -1,5 +1,4 @@
 import pygame
-
 import assets
 import input
 import leaderboards
@@ -13,6 +12,7 @@ pygame.init()
 def mainloop():
     running = True
     while running:
+        pygame.display.set_caption("SokoPy")
         for event in pygame.event.get():
             # kończy program po zamknięciu okna gry
             if event.type == pygame.QUIT:

@@ -12,11 +12,11 @@ leaderboard = {
 
 
 def display():
-
+    pygame.display.set_caption("SokoPy - Tablica wyników")
     draw.display.fill((0, 0, 0))  # czyści ekran
     draw.draw_text_center("Tablica wyników", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 75)
     draw.draw_text("Wciśnij klawisz:", assets.fonts["text_font"], assets.colors["white"], 50, 150)
-    draw.draw_text("1. Powrót do menu głównego", assets.fonts["text_font"], assets.colors["white"], 50, 200)
+    draw.draw_text("0. Powrót do menu głównego", assets.fonts["text_font"], assets.colors["white"], 50, 200)
 
     y = 200
     for level, scores in leaderboard.items():
@@ -36,5 +36,5 @@ def display():
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                if event.key == pygame.K_0:
                     return

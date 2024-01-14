@@ -21,3 +21,18 @@ sounds = {
     "error": pygame.mixer.Sound("assets/sounds/error.ogg"),
     "player_move": pygame.mixer.Sound("assets/sounds/player_move.ogg")
 }
+
+colors = {
+    "black": (0, 0, 0),
+    "white": (255, 255, 255),
+    "red": (255, 0, 0),
+    "green": (0, 255, 0),
+    "blue": (0, 0, 255),
+    "yellow": (255, 255, 0)
+}
+
+fonts = {
+    "title_font": pygame.font.SysFont("arialblack", 70),
+    "text_font": pygame.font.SysFont("arialblack", 30),
+    "small_text_font": pygame.font.SysFont("arialblack", 20)
+}

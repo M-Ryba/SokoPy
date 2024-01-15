@@ -2,14 +2,14 @@ import config
 
 
 def wall(level, x, y):
-    if level[x // config.speed][y // config.speed] == 1:
+    if level[y // config.speed][x // config.speed] == 1:
         return True
     else:
         return False
 
 
 def goal(level, x, y):
-    if level[y // config.speed][x // config.speed] == 3:  # z jakiegoś powodu x i y śą odwrócone (do sprawdzenia)
+    if level[y // config.speed][x // config.speed] == 3:
         return True
     else:
         return False

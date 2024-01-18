@@ -21,11 +21,11 @@ def choose(player_name):
                 if event.key == pygame.K_0:
                     return  # powraca do menu głównego
                 elif event.key == pygame.K_1:
-                    main.play(level.load(1))  # uruchom poziom 1 (przekazuje załadowany poziom)
+                    main.play(level.load(1), player_name)  # uruchom poziom 1 (przekazuje załadowany poziom)
                 elif event.key == pygame.K_2:
-                    main.play(level.load(2))
+                    main.play(level.load(2), player_name)
                 elif event.key == pygame.K_3:
-                    main.play(level.load(3))
+                    main.play(level.load(3), player_name)
 
         draw.display.fill((0, 0, 0))  # czyści ekran
         draw.draw_text(f"Gracz: {player_name}", assets.fonts["small_text_font"], assets.colors["white"], 50, 120)

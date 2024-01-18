@@ -37,3 +37,19 @@ def update(level, player, crates):
         display.blit(crate.image, (crate.x, crate.y))  # rysuje skrzynkę
     display.blit(player.image, (player.x, player.y))  # rysuje gracza
     pygame.display.update()
+
+
+def win_screen(player_name, level_number, score):
+    pygame.display.set_caption("Wygrana!")
+    display.fill((0, 0, 0))
+    draw_text_center("Wygrana!", assets.fonts["title_font"], assets.colors["yellow"], config.window_width // 2, 300)
+    draw_text_center(f"Gracz: {player_name}", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 400)
+    draw_text_center(f"Poziom: {level_number}", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 500)
+    draw_text_center(f"Wynik: {score}", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 600)
+    draw_text_center("Wynik zapisany na liście", assets.fonts["text_font"], assets.colors["white"], config.window_width // 2, 700)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_0:
+                    return

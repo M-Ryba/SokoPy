@@ -1,14 +1,16 @@
 import pygame
 import config
+import leaderboards
 import objects
 import sound
 import draw
 import collision
+import assets
 
 pygame.init()
 
 
-def play(level):
+def play(level, player_name):
     pygame.display.set_caption("SokoPy - Poziom 1 (naciśnij klawisz ESCAPE, aby wyjść z poziomu)")
     walk_cooldown = 0
     # opóźnienie między ruchami
@@ -20,6 +22,7 @@ def play(level):
     crates = objects.create_crates(level)  # tworzy skrzynki (obiekty w liście)
 
     clock = pygame.time.Clock()
+    score = 0
 
     running = True
     while running:
@@ -47,9 +50,11 @@ def play(level):
                     if crate_index is not False:
                         if crates[crate_index].move(level, crates, speed, 0):
                             player.move(1, 0, "right")
+                            score += 1
                             sound.play_sound("crate_move")
                     else:
                         player.move(1, 0, "right")
+                        score += 1
                         sound.play_sound("player_move")
                     walk_cooldown = walk_delay  # ustawia z powrotem licznik czasu do następnego ruchu
             elif keys[pygame.K_LEFT] and (player.x - speed) >= 0:  # strzałka w lewo
@@ -59,9 +64,11 @@ def play(level):
                         # jeśli skrzynka została rzeczywiście przesunięta (nie napotkała na przeszkodę)
                         if crates[crate_index].move(level, crates, -speed, 0):
                             player.move(-1, 0, "left")
+                            score += 1
                             sound.play_sound("crate_move")
                     else:
                         player.move(-1, 0, "left")
+                        score += 1
                         sound.play_sound("player_move")
                     walk_cooldown = walk_delay
 
@@ -71,9 +78,11 @@ def play(level):
                     if crate_index is not False:
                         if crates[crate_index].move(level, crates, 0, -speed):
                             player.move(0, -1, "up")
+                            score += 1
                             sound.play_sound("crate_move")
                     else:
                         player.move(0, -1, "up")
+                        score += 1
                         sound.play_sound("player_move")
                     walk_cooldown = walk_delay
             elif keys[pygame.K_DOWN] and (player.y + speed) < config.window_width:  # strzałka w dół
@@ -82,9 +91,11 @@ def play(level):
                     if crate_index is not False:
                         if crates[crate_index].move(level, crates, 0, speed):
                             player.move(0, 1, "down")
+                            score += 1
                             sound.play_sound("crate_move")
                     else:
                         player.move(0, 1, "down")
+                        score += 1
                         sound.play_sound("player_move")
                     walk_cooldown = walk_delay
 
@@ -94,6 +105,8 @@ def play(level):
                     win = False
 
             if win:
+                leaderboards.add(player_name, 1, score)
+                draw.win_screen(player_name, 1, score)
                 print("Wygrana!")
                 return
 

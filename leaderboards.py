@@ -22,7 +22,7 @@ def add(player_name, level_number, score):
     level_scores = leaderboard[str(level_number)]
     player_exists = False
     player_index = 0
-    for i in range(0, len(level_scores)):
+    for i in range(len(level_scores)):
         # jeśli nazwa gracza już istnieje w jednej z krotek
         if player_name in level_scores[i]:
             player_exists = True
@@ -34,7 +34,7 @@ def add(player_name, level_number, score):
         if score < level_scores[player_index][1]:
             level_scores.pop(player_index)
             level_scores.append((player_name, score))
-    leaderboard_sorted = algorithms.sort_leaderboard(leaderboard)
+    leaderboard_sorted = algorithms.sort_leaderboard(leaderboard, level_number)
     json.dump(leaderboard_sorted, open("assets/leaderboard.json", 'w'))
 
 
@@ -45,12 +45,12 @@ def display():
     draw.draw_text_center("Tablica wyników", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 75)
     draw.draw_text("Wciśnij klawisz:", assets.fonts["text_font"], assets.colors["white"], 50, 150)
     draw.draw_text("0. Powrót do menu głównego", assets.fonts["text_font"], assets.colors["white"], 50, 200)
-    y = 200
+    y = 210
     for level, scores in leaderboard.items():
-        y += 50
-        draw.draw_text(f"Poziom {level}:", assets.fonts["small_text_font"], assets.colors["white"], 50, y)
+        y += 35
+        draw.draw_text(f"Poziom {level}:", assets.fonts["small_text_font"], assets.colors["yellow"], 50, y)
         for player in scores:
-            y += 50
+            y += 25
             draw.draw_text(f"{player[0]}: {player[1]} ruchów", assets.fonts["small_text_font"], assets.colors["white"], 75, y)
 
     pygame.display.update()

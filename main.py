@@ -106,7 +106,6 @@ def play(level, player_name, level_number):
             if win:
                 leaderboards.add(player_name, level_number, score)
                 draw.win_screen(player_name, level_number, score)
-                print("Wygrana!")
                 return
 
         draw.update(level, player, crates)

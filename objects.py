@@ -26,7 +26,8 @@ class Crate(object):
 
     def move(self, level, crates, x, y):
         moved = False
-        if not collision.wall(level, self.x + x, self.y + y) and collision.crate(crates, self.x + x, self.y + y) is False:
+        if (not collision.wall(level, self.x + x, self.y + y) and
+                collision.crate(crates, self.x + x, self.y + y) is False):
             self.x += x
             self.y += y
             moved = True

@@ -47,9 +47,15 @@ def win_screen(player_name, level_number, score):
     draw_text_center(f"Poziom: {level_number}", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 500)
     draw_text_center(f"Wynik: {score}", assets.fonts["title_font"], assets.colors["white"], config.window_width // 2, 600)
     draw_text_center("Wynik zapisany na liście", assets.fonts["text_font"], assets.colors["white"], config.window_width // 2, 700)
+    draw_text_center("Wciśnij klawisz 0, aby wrócić do wyboru poziomów", assets.fonts["text_font"], assets.colors["blue"], config.window_width // 2, 750)
+    pygame.display.update()
     running = True
     while running:
         for event in pygame.event.get():
+            # kończy program po zamknięciu okna gry
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_0:
                     return

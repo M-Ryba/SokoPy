@@ -5,12 +5,11 @@ import objects
 import sound
 import draw
 import collision
-import assets
 
 pygame.init()
 
 
-def play(level, player_name):
+def play(level, player_name, level_number):
     pygame.display.set_caption("SokoPy - Poziom 1 (naciśnij klawisz ESCAPE, aby wyjść z poziomu)")
     walk_cooldown = 0
     # opóźnienie między ruchami
@@ -29,13 +28,13 @@ def play(level, player_name):
         pygame.time.Clock().tick(60)
 
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    return
             # kończy program po zamknięciu okna gry
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
 
         keys = pygame.key.get_pressed()
         # zmniejszenie licznika czasu do następnego ruchu
@@ -105,8 +104,8 @@ def play(level, player_name):
                     win = False
 
             if win:
-                leaderboards.add(player_name, 1, score)
-                draw.win_screen(player_name, 1, score)
+                leaderboards.add(player_name, level_number, score)
+                draw.win_screen(player_name, level_number, score)
                 print("Wygrana!")
                 return
 

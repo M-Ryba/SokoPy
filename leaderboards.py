@@ -3,6 +3,7 @@ import assets
 import draw
 import config
 import json
+import algorithms
 
 
 def load():
@@ -11,15 +12,30 @@ def load():
         return leaderboard
     except:
         # tworzy plik leaderboard.json z gotową strukturą lub nadpisuje istniejący z błędem
-        leaderboard = {1: [], 2: [], 3: []}
+        leaderboard = {"1": [], "2": [], "3": []}
         json.dump(leaderboard, open("assets/leaderboard.json", 'w'))
         return leaderboard
 
 
 def add(player_name, level_number, score):
     leaderboard = load()
-    leaderboard[level_number].append((player_name, score))
-    json.dump(leaderboard, open("assets/leaderboard.json", 'w'))
+    level_scores = leaderboard[str(level_number)]
+    player_exists = False
+    player_index = 0
+    for i in range(0, len(level_scores)):
+        # jeśli nazwa gracza już istnieje w jednej z krotek
+        if player_name in level_scores[i]:
+            player_exists = True
+            player_index = i
+            break
+    if not player_exists:
+        level_scores.append((player_name, score))
+    elif player_exists:
+        if score < level_scores[player_index][1]:
+            level_scores.pop(player_index)
+            level_scores.append((player_name, score))
+    leaderboard_sorted = algorithms.sort_leaderboard(leaderboard)
+    json.dump(leaderboard_sorted, open("assets/leaderboard.json", 'w'))
 
 
 def display():

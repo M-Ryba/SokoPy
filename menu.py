@@ -34,6 +34,7 @@ def mainloop():
         draw.draw_text("1. Poziomy", assets.fonts["text_font"], assets.colors["white"], 50, 200)
         draw.draw_text("2. Tablica wyników", assets.fonts["text_font"], assets.colors["white"], 50, 250)
         draw.draw_text("3. Wyjdź z gry", assets.fonts["text_font"], assets.colors["white"], 50, 300)
+        draw.draw_text("Maciej Rybarczyk (292490)", assets.fonts["text_font"], assets.colors["white"], config.window_width-450, config.window_height - 50)
         pygame.display.update()
 
 

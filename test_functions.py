@@ -32,6 +32,7 @@ def test_wall():
     assert wall(level3, 10 * speed, 8 * speed)
 
 
+# test funkcji sprawdzającej czy skrzynka znajduje się na celu
 def test_goal():
     speed = config.speed
     level1 = load(1)
@@ -48,7 +49,7 @@ def test_goal():
     assert goal(level3, 9 * speed, 8 * speed)
 
 
-# test sortowania listy wyników
+# test funkcji sortującej listę wyników
 def test_sort_leaderboard():
     leaderboard = {"1": [("Jan", 14), ("Adam", 12), ("Janusz", 23)], "2": [("Jan", 22), ("Adam", 1), ("Janusz", 14)], "3": [("Adam", 22), ("Janusz", 99)]}
     leaderboard_sorted_1 = {"1": [("Adam", 12), ("Jan", 14), ("Janusz", 23)], "2": [("Jan", 22), ("Adam", 1), ("Janusz", 14)], "3": [("Adam", 22), ("Janusz", 99)]}
@@ -59,6 +60,7 @@ def test_sort_leaderboard():
     assert sort_leaderboard(leaderboard, 3) == leaderboard_sorted_3  # sortuje tablicę wyników dla 3 poziomu
 
 
+# test funkcji zwracającej poprawny sprite gracza
 def test_get_player_sprite():
     assert get_player_sprite("right") == assets.images["player_right"]
     assert get_player_sprite("left") == assets.images["player_left"]

@@ -1,7 +1,9 @@
-from collision import wall, goal, crate
+from collision import wall, goal
 from algorithms import sort_leaderboard
 from level import load
+from movement import get_player_sprite
 import config
+import assets
 
 
 # test ładowania poziomów z pliku
@@ -30,6 +32,22 @@ def test_wall():
     assert wall(level3, 10 * speed, 8 * speed)
 
 
+def test_goal():
+    speed = config.speed
+    level1 = load(1)
+    assert goal(level1, 6 * speed, 7 * speed)
+    assert goal(level1, 6 * speed, 8 * speed)
+    level2 = load(2)
+    assert goal(level2, 6 * speed, 4 * speed)
+    assert goal(level2, 8 * speed, 4 * speed)
+    assert goal(level2, 4 * speed, 6 * speed)
+    level3 = load(3)
+    assert goal(level3, 9 * speed, 5 * speed)
+    assert goal(level3, 8 * speed, 6 * speed)
+    assert goal(level3, 6 * speed, 8 * speed)
+    assert goal(level3, 9 * speed, 8 * speed)
+
+
 # test sortowania listy wyników
 def test_sort_leaderboard():
     leaderboard = {"1": [("Jan", 14), ("Adam", 12), ("Janusz", 23)], "2": [("Jan", 22), ("Adam", 1), ("Janusz", 14)], "3": [("Adam", 22), ("Janusz", 99)]}
@@ -39,3 +57,13 @@ def test_sort_leaderboard():
     assert sort_leaderboard(leaderboard, 2) == leaderboard_sorted_2  # sortuje tablicę wyników dla 2 poziomu
     leaderboard_sorted_3 = {"1": [("Adam", 12), ("Jan", 14), ("Janusz", 23)], "2": [("Adam", 1), ("Janusz", 14), ("Jan", 22)], "3": [("Adam", 22), ("Janusz", 99)]}
     assert sort_leaderboard(leaderboard, 3) == leaderboard_sorted_3  # sortuje tablicę wyników dla 3 poziomu
+
+
+def test_get_player_sprite():
+    assert get_player_sprite("right") == assets.images["player_right"]
+    assert get_player_sprite("left") == assets.images["player_left"]
+    assert get_player_sprite("up") == assets.images["player_up"]
+    assert get_player_sprite("down") == assets.images["player_down"]
+    assert get_player_sprite("fdgg") == assets.images["error"]
+    assert get_player_sprite("1") == assets.images["error"]
+    assert get_player_sprite("") == assets.images["error"]
